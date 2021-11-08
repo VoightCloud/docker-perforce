@@ -1,2 +1,9 @@
 id_rsa*
 .p4config
+/.idea/dbnavigator.xml
+/.idea/docker-perforce.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/runConfigurations.xml
+/.idea/vcs.xml
+/.idea/.gitignore
