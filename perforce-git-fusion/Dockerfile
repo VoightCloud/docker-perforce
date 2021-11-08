@@ -1,7 +1,7 @@
 FROM voight/perforce-server
 MAINTAINER Jeff Voight <jeff.voight@gmail.com>
 
-ARG P4_VERSION
+ARG P4_VERSION=19.1
 
 RUN yum install -y \
     helix-git-fusion-20${P4_VERSION} \

@@ -1,7 +1,7 @@
 FROM voight/perforce-base
 MAINTAINER Jeff Voight <jeff.voight@gmail.com>
 
-ARG P4_VERSION
+ARG P4_VERSION=19.1
 
 RUN yum clean all --enablerepo='*' \
     && yum clean metadata --enablerepo='*' \

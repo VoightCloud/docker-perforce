@@ -1,7 +1,7 @@
 FROM voight/perforce-base
 MAINTAINER Jeff Voight <jeff.voight@gmail.com>
 
-ARG P4_VERSION
+ARG P4_VERSION=19.1
 
 #RUN curl -fsSL http://cdist2.perforce.com/perforce/r${P4_VERSION}/bin.linux26x86_64/p4 -o /usr/bin/p4 && chmod +x /usr/bin/p4 && \
     #    curl -fsSL http://cdist2.perforce.com/perforce/r${P4_VERSION}/bin.linux26x86_64/p4p -o /usr/bin/p4p && chmod +x /usr/bin/p4p
