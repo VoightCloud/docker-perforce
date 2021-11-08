@@ -14,9 +14,9 @@ stage ("Build") {
         stage('Build') {
             node('build') {
                 for(imageName in imageNames) {
-                    buildArm(imageName, imageVersion, imageRepo, nexusServer, "docker-build-arm${UUID.randomUUID().toString()}")
+                    //buildArm(imageName, imageVersion, imageRepo, nexusServer, "docker-build-arm${UUID.randomUUID().toString()}")
                     buildAMD(imageName, imageVersion, imageRepo, nexusServer, "docker-build-x86_64${UUID.randomUUID().toString()}")
-                    createManifest(imageName, imageVersion, imageRepo, nexusServer, "docker-manifest-x86_64${UUID.randomUUID().toString()}")
+                    //createManifest(imageName, imageVersion, imageRepo, nexusServer, "docker-manifest-x86_64${UUID.randomUUID().toString()}")
                 }
             }
         }
