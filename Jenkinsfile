@@ -98,7 +98,7 @@ def buildAMD(imageName, imageVersion, imageRepo, nexusServer, dockerLabel) {
                         dir(imageName) {
                             image = docker.build("${imageRepo}/${imageName}:${imageVersion}-amd64")
                             image.push("${imageVersion}-amd64")
-                            image.push("amd64-latest")
+                            image.push("latest")
                         }
                     }
                 }
