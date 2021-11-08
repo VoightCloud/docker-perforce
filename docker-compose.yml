@@ -2,7 +2,7 @@
 version: '3'
 services:
   perforce:
-    image: ambakshi/perforce-server
+    image: voight/perforce-server
     hostname: perforce
     volumes:
       - p4depot:/data
@@ -12,7 +12,7 @@ services:
       - ./envfile
 
   gfperforce:
-    image: ambakshi/perforce-git-fusion
+    image: voight/perforce-git-fusion
     hostname: perforce
     ports:
       - "1666:1666"

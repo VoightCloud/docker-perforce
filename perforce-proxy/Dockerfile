@@ -1,5 +1,5 @@
-FROM ambakshi/perforce-base
-MAINTAINER Amit Bakshi <ambakshi@gmail.com>
+FROM voight/perforce-base
+MAINTAINER Jeff Voight <jeff.voight@gmail.com>
 
 ARG P4_VERSION
 

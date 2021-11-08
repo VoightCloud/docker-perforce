@@ -1,5 +1,5 @@
-FROM ambakshi/perforce-base
-MAINTAINER Amit Bakshi <ambakshi@gmail.com>
+FROM voight/perforce-base
+MAINTAINER Jeff Voight <jeff.voight@gmail.com>
 
 # This is the last version of p4web I could find
 ENV P4WEB_VERSION 12.1

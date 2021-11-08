@@ -5,7 +5,7 @@ all: image
 
 P4_VERSION ?= 19.1
 P4_BASEIMAGE ?= centos@sha256:a799dd8a2ded4a83484bbae769d97655392b3f86533ceb7dd96bbac929809f3c
-DOCKER_REPO ?= ambakshi
+DOCKER_REPO ?= voight
 IMAGES=perforce-base perforce-proxy perforce-server perforce-git-fusion \
 	   perforce-swarm perforce-sampledepot perforce-p4web
 DOCKER_BUILD_ARGS ?= --build-arg P4_BASEIMAGE=$(P4_BASEIMAGE) --build-arg http_proxy=$(http_proxy) --build-arg P4_VERSION=$(P4_VERSION)

@@ -20,7 +20,7 @@ Build images (the Makefile's default target):
 Tag your images with your repo username and push the images to the Docker registry:
 
     $ docker login
-    $ DOCKER_REPO=ambakshi make image push
+    $ DOCKER_REPO=voight make image push
 
 ## Usage
 
@@ -137,6 +137,7 @@ Create a new client:
 ## Credits
 
 - Amit Bakshi (ambakshi@gmail.com)
+- Jeff Voight (jeff.voight@gmail.com)
 
 ## License
 
