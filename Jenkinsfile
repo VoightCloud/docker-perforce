@@ -3,7 +3,8 @@ ArrayList<String> imageNames = ["perforce-base", "perforce-server", "perforce-gi
 String imageRepo = "voight"
 String nexusServer = "nexus.voight.org:9042"
 
-podTemplate(label: "build",
+stage("Build"){
+    podTemplate(label: "build",
         containers: [
             containerTemplate(name: 'docker',
                                 image: 'docker:20.10.9',
@@ -12,27 +13,31 @@ podTemplate(label: "build",
                                 command: 'cat',
                                 envVars: [containerEnvVar(key: 'DOCKER_HOST', value: "unix:///var/run/docker.sock")],
                                 privileged: true),
-            containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:latest-jdk11', args: '${computer.jnlpmac} ${computer.name}')
+            containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:latest-jdk11', args: '${computer.jnlpmac} ${computer.name}'),
+        ],
+        volumes: [
+                hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
         ],
         nodeSelector: 'kubernetes.io/arch=amd64'
     ) {
         node('build') {
-            stage('Build') {
+            stage('Checkout') {
+                def scmVars = checkout([
+                        $class           : 'GitSCM',
+                        userRemoteConfigs: scm.userRemoteConfigs,
+                        branches         : scm.branches,
+                        extensions       : scm.extensions
+                    ])
+            }
+
+            stage("Docker build"){
                 container('docker'){
-                    stage("Build"){
-                        def scmVars = checkout([
-                                $class           : 'GitSCM',
-                                userRemoteConfigs: scm.userRemoteConfigs,
-                                branches         : scm.branches,
-                                extensions       : scm.extensions
-                            ])
-                        for(imageName in imageNames) {
-                            docker.withRegistry("https://${nexusServer}", 'NexusDockerLogin') {
-                                dir(imageName) {
-                                    image = docker.build("${imageRepo}/${imageName}:${imageVersion}-amd64")
-                                    image.push("${imageVersion}-amd64")
-                                    image.push("latest")
-                                }
+                    for(imageName in imageNames) {
+                        docker.withRegistry("https://${nexusServer}", 'NexusDockerLogin') {
+                            dir(imageName) {
+                                image = docker.build("${imageRepo}/${imageName}:${imageVersion}-amd64")
+                                image.push("${imageVersion}-amd64")
+                                image.push("latest")
                             }
                         }
                     }
@@ -40,6 +45,7 @@ podTemplate(label: "build",
             }
         }
     }
+}
 
 
 
