@@ -3,9 +3,7 @@ ArrayList<String> imageNames = ["perforce-base", "perforce-server", "perforce-gi
 String imageRepo = "voight"
 String nexusServer = "nexus.voight.org:9042"
 
-stage ("Build") {
-    podTemplate(
-        label: "build",
+podTemplate(label: "build",
         containers: [
             containerTemplate(name: 'docker',
                                 image: 'docker:20.10.9',
@@ -18,20 +16,24 @@ stage ("Build") {
         ],
         nodeSelector: 'kubernetes.io/arch=amd64'
     ) {
-        stage('Build') {
-            node('build') {
-            def scmVars = checkout([
-                            $class           : 'GitSCM',
-                            userRemoteConfigs: scm.userRemoteConfigs,
-                            branches         : scm.branches,
-                            extensions       : scm.extensions
-                        ])
-                for(imageName in imageNames) {
-                docker.withRegistry("https://${nexusServer}", 'NexusDockerLogin') {
-                        dir(imageName) {
-                            image = docker.build("${imageRepo}/${imageName}:${imageVersion}-amd64")
-                            image.push("${imageVersion}-amd64")
-                            image.push("latest")
+        node('build') {
+            stage('Build') {
+                container('docker'){
+                    stage("Build"){
+                        def scmVars = checkout([
+                                $class           : 'GitSCM',
+                                userRemoteConfigs: scm.userRemoteConfigs,
+                                branches         : scm.branches,
+                                extensions       : scm.extensions
+                            ])
+                        for(imageName in imageNames) {
+                            docker.withRegistry("https://${nexusServer}", 'NexusDockerLogin') {
+                                dir(imageName) {
+                                    image = docker.build("${imageRepo}/${imageName}:${imageVersion}-amd64")
+                                    image.push("${imageVersion}-amd64")
+                                    image.push("latest")
+                                }
+                            }
                         }
                     }
                 }
