@@ -16,6 +16,8 @@ ENV P4CONFIG .p4config
 ENV DATAVOLUME /data
 ENV P4PORT 1666
 ENV P4USER p4admin
+ENV P4PASSWD pass12349ers!
+
 VOLUME ["$DATAVOLUME"]
 
 ADD ./p4-users.txt /root/
