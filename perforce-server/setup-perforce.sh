@@ -55,6 +55,10 @@ if [ "$FRESHINSTALL" = "1" ]; then
     p4 protect -i < /root/p4-protect.txt
 fi
 
+if [ -d /root/p4-ldap.txt ]; then
+  p4 ldap -i < /root/p4-ldap.txt
+fi
+
 echo "   P4USER=$P4USER (the admin user)"
 
 if [ "$P4PASSWD" == "pass12349ers!" ]; then
