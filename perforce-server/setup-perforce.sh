@@ -64,11 +64,11 @@ if [ -d /root/p4-ldap.txt ]; then
   if [ -d /root/p4-ldap-groups.txt ]; then
     p4 group -i < /root/p4-ldap-groups.txt
   fi
+  p4 configure set "startup.1=ldapsync -g -i 30"
+  p4 configure set "startup.2=ldapsync -u -c -i 30 $LDAPNAME"
   p4 admin restart
   p4 ldapsync -u -c $LDAPNAME
   p4 ldapsync -g
-  p4 configure set "startup.1=ldapsync -g -i 30"
-  p4 configure set "startup.2=ldapsync -u -c -i 30"
 fi
 
 echo "   P4USER=$P4USER (the admin user)"

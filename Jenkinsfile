@@ -1,4 +1,4 @@
-String imageVersion = "1.7"
+String imageVersion = "1.8"
 ArrayList<String> imageNames = ["perforce-base", "perforce-server", "perforce-git-fusion", "perforce-p4web", "perforce-proxy", "perforce-swarm"]
 String imageRepo = "voight"
 String nexusServer = "nexus.voight.org:9042"
