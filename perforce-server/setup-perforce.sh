@@ -66,15 +66,6 @@ if [ -f /root/p4-ldap.txt ]; then
     p4 group -i < /root/p4-ldap-groups.txt
     p4 configure set "startup.2=ldapsync -g -i 30"
   fi
-  if [ -f /root/p4-readonly-ldap.txt ]; then
-    p4 ldap -i < /root/p4-readonly-ldap.txt
-    LDAPREADONLYNAME=`grep "^Name:" /root/p4-readonly-ldap.txt |awk '{print $2}'`
-    p4 configure set auth.ldap.order.2=$LDAPREADONLYNAME
-    if [ -f /root/p4-ldap-readonly-groups.txt ]; then
-      p4 group -i < /root/p4-ldap-readonly-groups.txt
-    fi
-  fi
-
   p4 admin restart
 fi
 
