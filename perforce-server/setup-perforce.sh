@@ -59,13 +59,16 @@ if [ -d /root/p4-ldap.txt ]; then
   p4 configure set security=3
   p4 ldap -i < /root/p4-ldap.txt
   p4 configure set auth.default.method=ldap
-  LDAPNAME=`grep "Name:" p4-ldap.txt |awk '{print $2}'`
+  LDAPNAME=`grep "^Name:" p4-ldap.txt |awk '{print $2}'`
   p4 configure set auth.ldap.order.1=$LDAPNAME
   if [ -d /root/p4-ldap-groups.txt ]; then
     p4 group -i < /root/p4-ldap-groups.txt
   fi
   p4 admin restart
   p4 ldapsync -u -c $LDAPNAME
+  p4 ldapsync -g
+  p4 configure set startup.1=ldapsync -g -i 30
+  p4 configure set startup.2=ldapsync -u -c -i 30
 fi
 
 echo "   P4USER=$P4USER (the admin user)"
@@ -76,6 +79,3 @@ if [ "$P4PASSWD" == "pass12349ers!" ]; then
     echo "   P4PASSWD=$P4PASSWD"
     echo -e "\n***** WARNING: USING DEFAULT PASSWORD ******\n"
 fi
-
-# exec /usr/bin/p4web -U perforce -u $P4USER -b -p $P4PORT -P "$P4PASSWD" -w 8080
-
