@@ -13,7 +13,7 @@ if [ ! -e /var/run/configure-swarm ]; then
 fi
 echo '<?php phpinfo(); ?>' > /opt/perforce/swarm/public/phpinfo.php
 for i in `seq 20`; do
-    test -e /var/run/httpd/httpd.pid && break
+    test -e /opt/rh/httpd24/root/var/run/httpd/httpd.pid && break
     sleep 2
 done
-exec tail --pid=$(< /var/run/httpd/httpd.pid) -F /var/log/httpd/*
+exec tail -F /var/log/httpd24/swarm.access_log
