@@ -56,6 +56,7 @@ if [ "$FRESHINSTALL" = "1" ]; then
 fi
 
 if [ -d /root/p4-ldap.txt ]; then
+  p4 configure set security=3
   p4 ldap -i < /root/p4-ldap.txt
 fi
 
